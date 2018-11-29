@@ -5,7 +5,7 @@ class Bat {
 
         this.object = null;
         this.tag = "bat";
-        this.hp = 60;
+        this.hp = 40;
         this.cooldown = false;
         this.rocks = [];
 
@@ -42,8 +42,13 @@ class Bat {
             element.update();
         });
 
-        if (this.object.x < -15 || this.hp < 1)
+        if (this.object.x < -15 || this.hp < 1) {
+            
+            if (this.hp < 1)
+                player.score += 30;
+            
             this.die = true;
+        }
 
     }
 
@@ -54,7 +59,7 @@ class Bat {
             this.cooldown = false;
         }.bind(this), 1500);
 
-        this.rocks.push(new Rock(addObjectFunc, this.object.x + 5, this.object.y, player.x, player.y, "bat", {
+        this.rocks.push(new Rock(addObjectFunc, this.object.x + 5, this.object.y + 2, player.x, player.y, "bat", {
             w: 2,
             h: 2
         }));

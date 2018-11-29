@@ -50,13 +50,12 @@ class Background {
     }
 
     start() {
-        this.engine();
+        this.engine(true);
     }
 
-    engine() {
+    engine(first) {
 
-
-        if (!pause || !gameStarted) {
+        if (!pause || arguments.length > 0) {
             this.ctx.clearRect(0, 0, this.w, this.h);
 
             this.update();

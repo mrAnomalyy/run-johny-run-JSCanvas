@@ -24,6 +24,24 @@
             </div>
         </div>
     </div>
+    
+    <div class="container" id="scoreboard">
+
+        <div class="title">Scoreboard</div>
+        <div class="scores" id="scores">
+            <div class="score">1. Player - 4 943 Points</div>
+            <div class="score">2. Dick - 4 943 Points</div>
+            <div class="score">3. Paul - 4 943 Points</div>
+            <div class="score">4. Jeremy - 4 943 Points</div>
+            <div class="score">5. Rodger - 4 943 Points</div>
+            <div class="score">6. Steve - 4 943 Points</div>
+            <div class="score">7. Kurwa - 4 943 Points</div>
+            <div class="score">8. Ivan - 4 943 Points</div>
+            <div class="score">9. Michael - 4 943 Points</div>
+            <div class="score">10. You - 4 943 Points</div>
+        </div>
+        <div class="go" onclick="player.restartGame()">Run again!</div>
+    </div>
 
     <div class="UI" id="ui">
         <div class="player">
@@ -33,6 +51,7 @@
         </div>
 
         <div class="time" id="player-time">00:00</div>
+        <div class="time" id="player-score">0 points</div>
 
 
 

@@ -34,11 +34,11 @@ class Spells {
     cast(id) {
 
         id--;
-        
+
         if (!this.blocks[id] && this.player.mp >= this.spells[id].cost) {
 
             this.blocks[id] = true;
-            
+
             this.player.mp -= this.spells[id].cost;
 
             this.spells[id].f();
@@ -74,7 +74,7 @@ class Spells {
 
                     setTimeout(function (obj) {
                         obj.invincible = false;
-                    }, 1500, o);
+                    }, 500, o);
 
                 }
 
@@ -85,6 +85,13 @@ class Spells {
                 this.rocks.splice(n, 1);
             }
 
+        }.bind(this));
+    }
+
+    reset() {
+        this.rocks.forEach(function (i, n, a) {
+            this.engine.removeObject(i.o.gid);
+            this.rocks.splice(n, 1);
         }.bind(this));
     }
 

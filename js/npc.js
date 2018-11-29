@@ -22,7 +22,7 @@ class NPC {
 
         }.bind(this));
 
-        this.maxSpawn = 5;
+        this.maxSpawn = 12;
 
     }
 
@@ -103,6 +103,28 @@ class NPC {
         }.bind(this))
 
         this.spawn();
+
+    }
+
+    reset() {
+
+        this.spawned.forEach(function (i, n, a) {
+
+            this.engine.removeObject(i.gid);
+
+            if (i.rocks) {
+                i.rocks.forEach(function (r, number, arr) {
+
+                    this.engine.removeObject(r.o.gid);
+
+                }.bind(this));
+            }
+
+            delete this.spawned[n];
+
+        }.bind(this));
+
+        this.spawned = [];
 
     }
 

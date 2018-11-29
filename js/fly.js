@@ -6,9 +6,9 @@ class Fly {
         this.object = null;
         this.layer = 4;
         this.tag = "fly";
-        this.hp = 30;
+        this.hp = 15;
         this.cooldown = false;
-        
+
         this.texture = {
             texture: 0,
             textures: [{
@@ -48,7 +48,7 @@ class Fly {
     update() {
 
         this.object.x -= 0.2;
-        
+
         if (this.direction == 'up')
             this.object.y -= 0.05;
 
@@ -61,8 +61,13 @@ class Fly {
             this.direction = 'up';
         }
 
-        if (this.object.x < -5 || this.hp < 1)
+        if (this.object.x < -5 || this.hp < 1) {
+            
+            if (this.hp < 1)
+                player.score += 10;
+            
             this.die = true;
+        }
 
     }
 

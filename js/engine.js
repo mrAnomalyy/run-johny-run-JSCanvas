@@ -76,12 +76,12 @@ class C2DE {
 
     frameUpdate() {
 
-        if (this.pausebool)
-            return false;
-
-        this.fps++;
-        this.ctx.clearRect(0, 0, this.w, this.h);
-        this.update();
+        if (!this.pausebool) {
+            this.fps++;
+            this.ctx.clearRect(0, 0, this.w, this.h);
+            this.update();
+        }
+        
         requestAnimationFrame(this.frameUpdate.bind(this));
 
     }
@@ -120,8 +120,8 @@ class C2DE {
         this.modules[name] = module;
 
     }
-    
-    getModule(name){
+
+    getModule(name) {
         return this.modules[name];
     }
 

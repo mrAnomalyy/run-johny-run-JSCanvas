@@ -3,12 +3,13 @@ class Rock {
 
         this.forceX = 15;
         this.forceY = Math.abs(ty - y) * 1.1;
+        let layer = 5;
 
         switch (parent) {
             case "bat":
                 this.forceX = (tx - x) * 1.005;
 
-                console.log(this.forceX);
+                layer = 0;
 
                 if (this.forceX > 5)
                     this.forceX = 5;
@@ -22,7 +23,7 @@ class Rock {
 
         this.w = 3;
         this.h = 3;
-        
+
         if (params !== undefined) {
 
             this.w = (params.w !== undefined) ? params.w : 3;
@@ -30,7 +31,7 @@ class Rock {
 
         }
 
-        this.o = addObject(new C2DE_GObj(x, y, this.w, this.h, 5, {
+        this.o = addObject(new C2DE_GObj(x, y, this.w, this.h, layer, {
             texture: 0,
             textures: [{
                 src: 'tex/rock.png'

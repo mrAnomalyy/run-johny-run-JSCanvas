@@ -5,8 +5,8 @@ class Snail {
 
         this.object = null;
         this.tag = "snail";
-        this.hp = 15;
-        
+        this.hp = 25;
+
         this.texture = {
             texture: 0,
             textures: [{
@@ -65,12 +65,19 @@ class Snail {
         }
 
         if (this.object.y < this.oy)
-            this.object.y += 0.3;            
-        
+            this.object.y += 0.3;
+
         this.object.texture.texture = (this.direction == 'left') ? 1 : 0;
 
-        if (this.object.x < this.pathEnd && this.object.x < -5 || this.hp < 1)
+        if (this.object.x < this.pathEnd && this.object.x < -5 || this.hp < 1) {
+
+            if (this.hp < 1){
+                player.score += 25;
+                console.log('PlayerScore now: ' + player.score);
+            }
+
             this.die = true;
+        }
 
     }
 

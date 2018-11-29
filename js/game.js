@@ -49,10 +49,11 @@ player.addAction("KeyD", function () {
 });
 
 player.addAction("KeyW", function () {
-    if (!this.inJump) {
+    if (!this.inJump && this.mp >= 10) {
         this.sJump = this.y;
         this.inJump = true;
         this.state = "jump";
+        this.mp -= 10;
     }
 });
 
@@ -92,6 +93,7 @@ player.addAction("Escape", function () {
 player.hp = 100;
 player.mp = 100;
 player.time = 0;
+player.score = 0;
 
 setInterval(function () {
 
@@ -100,7 +102,7 @@ setInterval(function () {
 
     player.time++;
     player.mp += 5;
-    
+
     if (player.mp > 100)
         player.mp = 100;
 
@@ -116,8 +118,11 @@ player.updateUI = function () {
 
     document.getElementById('player-hp').innerHTML = this.hp;
     document.getElementById('player-mp').innerHTML = this.mp;
+
     document.getElementById('player-hp').style.backgroundPosition = '-' + this.hp + '% 0%';
     document.getElementById('player-mp').style.backgroundPosition = '-' + this.mp + '% 0%';
+
+    document.getElementById('player-score').innerHTML = (player.score <= 1000) ? player.score + ' points' : player.score + ' p.';
 
     let m = Math.floor(player.time / 60);
     let s = player.time % 10;
@@ -126,15 +131,14 @@ player.updateUI = function () {
     s = (s < 10) ? '0' + s : s;
 
     document.getElementById('player-time').innerHTML = m + ' : ' + s;
-    
-    if (player.hp  < 1){
-        endGame();
-    }
-    
-}
 
-let endGame = function(){
-    
+    if (player.hp < 1) {
+        player.hp = 0;
+        setTimeout(function () {
+            this.endGame(); // give player time to understand
+        }.bind(this), 500);
+    }
+
 }
 
 let uiT;
@@ -173,12 +177,43 @@ player.startGame = function () {
 
 let road = new Road();
 
+player.restartGame = function () {
+
+    player.hp = 100;
+    player.mp = 100;
+
+    document.getElementById('scoreboard').style.display = 'none'; // without animation, for now.
+
+    game.getModule('npc').reset();
+    game.getModule('spells').reset();
+    road.reset();
+    player.x = 15;
+    player.y = 75;
+
+    this.showUI(true);
+
+    pause = false;
+    gameStarted = true;
+    game.pausebool = false;
+
+}
+
+player.endGame = function () {
+    pause = true;
+    gameStarted = false;
+    game.pause();
+    this.showUI(false);
+
+    document.getElementById('scoreboard').style.display = 'block';
+
+}
+
 game.addModule('npc', new NPC(game, road, [{
     p: Snail,
-    c: 45,
+    c: 40,
 }, {
     p: Bat,
-    c: 28
+    c: 33
 }, {
     p: Fly,
     c: 25
@@ -224,49 +259,57 @@ game.update = function () {
 
     background.speed = road.speed * 0.15;
 
-    if (!player.invincible) {
+    let i = player.getInteractions();
 
-        let i = player.getInteractions();
+    i.forEach(function (item, n, a) {
 
-        i.forEach(function (item, n, a) {
+        switch (item.tag) {
 
-            switch (item.tag) {
+            case 'ruby':
+                item.die();
+                player.hp += 25;
+                break;
+            case 'snail':
 
-                case 'ruby':
-                    item.die();
-                    player.hp += 25;
-                    break;
-                case 'snail':
-                    player.hp -= 2;
-                    player.invincible = true;
-                    setTimeout(function () {
-                        player.invincible = false;
-                    }, 1000);
-                    break;
-                case 'fly':
-                    player.hp -= 2;
-                    player.invincible = true;
-                    setTimeout(function () {
-                        player.invincible = false;
-                    }, 1000);
-                    break;
-                case 'bat':
-                case 'bat_rock':
-                    player.hp -= 10;
-                    player.invincible = true;
-                    setTimeout(function () {
-                        player.invincible = false;
-                    }, 1000);
-                    break;
-                default:
-                    console.log("Interacted with " + item.tag);
-                    break;
-            }
+                if (player.inJump || player.invincible)
+                    return;
+
+                player.hp -= 5;
+                player.invincible = true;
+                setTimeout(function () {
+                    player.invincible = false;
+                }, 1000);
+                break;
+            case 'fly':
+
+                if (player.inJump || player.invincible)
+                    return;
+
+                player.hp -= 2;
+                player.invincible = true;
+                setTimeout(function () {
+                    player.invincible = false;
+                }, 1000);
+                break;
+            case 'bat':
+            case 'bat_rock':
+
+                if (player.inJump || player.invincible)
+                    return;
+
+                player.hp -= 10;
+                player.invincible = true;
+                setTimeout(function () {
+                    player.invincible = false;
+                }, 1000);
+                break;
+            default:
+                console.log("Interacted with " + item.tag);
+                break;
+        }
 
 
-        }.bind(this));
-
-    }
+    }.bind(this));
 
     player.updateUI();
     game.getModule('spells').update();

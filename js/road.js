@@ -15,7 +15,7 @@ class Road {
                 }]
             }, "road"))
         ];
-        
+
         this.active = 0;
         this.speed = 0;
         this.passed = 0;
@@ -38,10 +38,18 @@ class Road {
 
         }
 
-        if (this.passed > 15)
+        if (this.passed > 9)
             this.stop = true;
 
         return true;
+    }
+
+    reset() {
+        this.passed = 0;
+        this.objects[0].x = 0;
+        this.objects[0].y = 65;
+        this.objects[1].x = 99;
+        this.objects[1].y = 65;
     }
 
 }
