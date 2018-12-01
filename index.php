@@ -67,10 +67,11 @@
 
     <script>
         let d = document;
-
     </script>
+    
     <script src="js/gob.js"></script>
     <script src="js/keyboard.js"></script>
+    <script src="js/request.js"></script>
     <script src="js/rock.js"></script>
     <script src="js/spells.js"></script>
     <script src="js/engine.js"></script>

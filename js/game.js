@@ -181,6 +181,7 @@ player.restartGame = function () {
 
     player.hp = 100;
     player.mp = 100;
+    player.score = 0;
 
     document.getElementById('scoreboard').style.display = 'none'; // without animation, for now.
 
@@ -199,13 +200,51 @@ player.restartGame = function () {
 }
 
 player.endGame = function () {
+    
     pause = true;
     gameStarted = false;
     game.pause();
     this.showUI(false);
+    
+    new Request('POST', 'functions.php?function=addScore', 'name=' + document.getElementById('player-name').innerHTML + '&score=' + this.score, this.loadScores.bind(this));
 
     document.getElementById('scoreboard').style.display = 'block';
 
+}
+
+player.loadScores = function(e){
+        
+    this.gotNick = e;
+    
+    new Request('GET', 'functions.php?function=getScores', '', this.appendResults.bind(this));
+    
+}
+
+player.appendResults = function(raw){
+    
+    let s = document.getElementById('scores');
+    
+    let r = JSON.parse(raw);
+    
+    if (!r){
+        s.innerHTML = 'Error on loading';
+        return;
+    }
+    
+    s.innerHTML = '';
+    
+    r.forEach(function(element, n, a){
+        
+        if (element.name != this.gotNick){
+            s.innerText += (n + 1) + '. ' + element.name + ' - ' + element.score + ' points';
+        }else{
+            s.innerText += 'It\'s you\'re -> ' + (n + 1) + '. ' + element.name + ' - ' + element.score + ' points';
+        }
+        
+        
+        s.innerHTML += '<br>';
+    }.bind(this));
+    
 }
 
 game.addModule('npc', new NPC(game, road, [{
@@ -246,7 +285,7 @@ game.update = function () {
 
     } else {
 
-        if (player.x > 47) {
+        if (player.x > 47 && game.keyboard.pressed["KeyD"]) {
             road.speed = (pause) ? 0 : 0.3;
 
             player.texture.texture = 2;
