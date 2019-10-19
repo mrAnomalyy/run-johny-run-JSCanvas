@@ -183,7 +183,7 @@ player.restartGame = function () {
 	player.mp = 100;
 	player.score = 0;
 
-	document.getElementById('scoreboard').style.display = 'none'; // without animation, for now.
+	document.getElementById('endgame').style.display = 'none'; // without animation, for now.
 
 	game.getModule('npc').reset();
 	game.getModule('spells').reset();
@@ -206,44 +206,7 @@ player.endGame = function () {
 	game.pause();
 	this.showUI(false);
 
-	new Request('POST', 'functions.php?function=addScore', 'name=' + document.getElementById('player-name').innerHTML + '&score=' + this.score, this.loadScores.bind(this));
-
-	document.getElementById('scoreboard').style.display = 'block';
-
-}
-
-player.loadScores = function (e) {
-
-	this.gotNick = e;
-
-	new Request('GET', 'functions.php?function=getScores', '', this.appendResults.bind(this));
-
-}
-
-player.appendResults = function (raw) {
-
-	let s = document.getElementById('scores');
-
-	let r = JSON.parse(raw);
-
-	if (!r) {
-		s.innerHTML = 'Error on loading';
-		return;
-	}
-
-	s.innerHTML = '';
-
-	r.forEach(function (element, n, a) {
-
-		if (element.name != this.gotNick) {
-			s.innerText += (n + 1) + '. ' + element.name + ' - ' + element.score + ' points';
-		} else {
-			s.innerText += 'It\'s you\'re -> ' + (n + 1) + '. ' + element.name + ' - ' + element.score + ' points';
-		}
-
-
-		s.innerHTML += '<br>';
-	}.bind(this));
+	document.getElementById('endgame').style.display = 'block';
 
 }
 
@@ -270,7 +233,6 @@ game.update = function () {
 		if (player.y <= player.sJump - 12 || player.isFalling) {
 
 			player.isFalling = true;
-			//            console.log(player.y + ' + 2 = ' + (player.y + 2));
 			player.y += 0.8;
 
 			if (player.y >= player.sJump) {
