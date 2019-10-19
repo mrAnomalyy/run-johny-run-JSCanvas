@@ -1,98 +1,98 @@
 class Spells {
-    constructor(engine, player) {
-        this.player = player;
-        this.engine = engine;
-        this.rocks = [];
+  constructor(engine, player) {
+    this.player = player;
+    this.engine = engine;
+    this.rocks = [];
 
-        this.spells = [
-            {
-                f: function () {
-                    let t = this.engine.getNearest(player);
-                    this.rocks.push(new Rock(this.engine.addObject.bind(this.engine), player.x, player.y, t.x, t.y, "player"));
+    this.spells = [
+      {
+        f: function () {
+          let t = this.engine.getNearest(player);
+          this.rocks.push(new Rock(this.engine.addObject.bind(this.engine), player.x, player.y, t.x, t.y, "player"));
 
-                }.bind(this),
+        }.bind(this),
 
-                c: 300,
-                cost: 5
-            },
+        c: 300,
+        cost: 5
+      },
 
-            {
-                f: function () {
+      {
+        f: function () {
 
-                }.bind(this),
+        }.bind(this),
 
-                c: 5000,
-                cost: 15
-            }
+        c: 5000,
+        cost: 15
+      }
 
-        ];
+    ];
 
-        this.blocks = [];
+    this.blocks = [];
+
+  }
+
+  cast(id) {
+
+    id--;
+
+    if (!this.blocks[id] && this.player.mp >= this.spells[id].cost) {
+
+      this.blocks[id] = true;
+
+      this.player.mp -= this.spells[id].cost;
+
+      this.spells[id].f();
+
+      let spellel = document.getElementById('spell' + (id + 1));
+
+      spellel.className += ' block';
+
+      setTimeout(function (id) {
+        this.blocks[id] = false;
+        spellel.className = 'spell';
+      }.bind(this), this.spells[id].c, id);
 
     }
+  }
 
-    cast(id) {
+  update() {
+    this.rocks.forEach(function (i, n, a) {
+      i.update();
 
-        id--;
+      let int = this.engine.getInteractions(i.o);
 
-        if (!this.blocks[id] && this.player.mp >= this.spells[id].cost) {
+      int.forEach(function (o, n, a) {
 
-            this.blocks[id] = true;
+        if (this.engine.getModule('npc') instanceof NPC)
+          o = (this.engine.getModule('npc').getByGid(o.gid));
 
-            this.player.mp -= this.spells[id].cost;
+        if (o && o.tag != "player" && o.tag != "ruby" && !o.invincible) {
 
-            this.spells[id].f();
+          o.hp -= 15;
+          o.invincible = true;
+          o.object.y -= 3;
 
-            let spellel = document.getElementById('spell' + (id + 1));
-
-            spellel.className += ' block';
-
-            setTimeout(function (id) {
-                this.blocks[id] = false;
-                spellel.className = 'spell';
-            }.bind(this), this.spells[id].c, id);
+          setTimeout(function (obj) {
+            obj.invincible = false;
+          }, 500, o);
 
         }
-    }
 
-    update() {
-        this.rocks.forEach(function (i, n, a) {
-            i.update();
+      }.bind(this))
 
-            let int = this.engine.getInteractions(i.o);
+      if (i.die) {
+        this.engine.removeObject(i.o.gid);
+        this.rocks.splice(n, 1);
+      }
 
-            int.forEach(function (o, n, a) {
+    }.bind(this));
+  }
 
-                if (this.engine.getModule('npc') instanceof NPC)
-                    o = (this.engine.getModule('npc').getByGid(o.gid));
-
-                if (o && o.tag != "player" && o.tag != "ruby" && !o.invincible) {
-
-                    o.hp -= 15;
-                    o.invincible = true;
-                    o.object.y -= 3;
-
-                    setTimeout(function (obj) {
-                        obj.invincible = false;
-                    }, 500, o);
-
-                }
-
-            }.bind(this))
-
-            if (i.die) {
-                this.engine.removeObject(i.o.gid);
-                this.rocks.splice(n, 1);
-            }
-
-        }.bind(this));
-    }
-
-    reset() {
-        this.rocks.forEach(function (i, n, a) {
-            this.engine.removeObject(i.o.gid);
-            this.rocks.splice(n, 1);
-        }.bind(this));
-    }
+  reset() {
+    this.rocks.forEach(function (i, n, a) {
+      this.engine.removeObject(i.o.gid);
+      this.rocks.splice(n, 1);
+    }.bind(this));
+  }
 
 }

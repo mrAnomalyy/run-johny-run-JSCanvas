@@ -1,254 +1,245 @@
 * {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 html {
-    font-size: 14pt;
+  font-size: 14pt;
 }
 
 .container {
-    position: fixed;
-    top: 33.5%;
-    left: 23.5%;
-    width: 50%;
-    height: 25%;
-    background: rgba(255, 255, 255, 1);
-    padding: 3%;
-    border-radius: 14px;
-    z-index: 1000;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 33.5%;
+  left: 23.5%;
+  width: 50%;
+  height: 25%;
+  background: rgba(255, 255, 255, 1);
+  padding: 3%;
+  border-radius: 14px;
+  z-index: 1000;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .container#scoreboard {
-    display: none;
-    animation: pushFromTop 0.4s 1;
-    text-align: center;
-    padding-top: 1.5%;
-    height: auto;
-    top: 20%;
+  display: none;
+  animation: pushFromTop 0.4s 1;
+  text-align: center;
+  padding-top: 1.5%;
+  height: auto;
+  top: 20%;
 }
 
 .container#scoreboard .go {
-    margin-top: 3%;
+  margin-top: 3%;
 }
 
 .flex {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .container .title {
-    font-size: 2em;
-    transform: skewX(-15deg);
-    text-align: center;
-    margin-bottom: 4%;
+  font-size: 2em;
+  transform: skewX(-15deg);
+  text-align: center;
+  margin-bottom: 4%;
 }
 
-.container .flex > div {
-    width: 47%;
-    border-right: 1px rgba(0, 0, 0, 0.3) solid;
+.container .flex>div {
+  width: 47%;
+  border-right: 1px rgba(0, 0, 0, 0.3) solid;
 }
 
-.container .flex > div:last-child {
-
-    border-right: none;
-
+.container .flex>div:last-child {
+  border-right: none;
 }
 
 .container .flex .instruction {
-    overflow-y: auto;
-    height: 15vh;
-    max-width: 40em;
-    padding-right: 1%;
+  overflow-y: auto;
+  height: 15vh;
+  max-width: 40em;
+  padding-right: 1%;
 }
 
 .container .flex .play {
-    text-align: center;
-    padding: 0.5%;
+  text-align: center;
+  padding: 0.5%;
 }
 
 .container .flex .play input {
-    background: rgba(253, 253, 253, 0.9);
-    font-size: 1.2em;
-    text-align: center;
-    border-radius: 4px;
-    width: 90%;
-    margin-bottom: 15%;
+  background: rgba(253, 253, 253, 0.9);
+  font-size: 1.2em;
+  text-align: center;
+  border-radius: 4px;
+  width: 90%;
+  margin-bottom: 15%;
 }
 
 .go {
-    background: rgba(253, 253, 253, 0.9);
-    display: inline-block;
-    padding: 1% 2%;
-    border: 1px rgba(0, 0, 0, 0.3) solid;
-    border-radius: 3px;
-    width: auto;
-    transition-duration: 0.3s;
+  background: rgba(253, 253, 253, 0.9);
+  display: inline-block;
+  padding: 1% 2%;
+  border: 1px rgba(0, 0, 0, 0.3) solid;
+  border-radius: 3px;
+  width: auto;
+  transition-duration: 0.3s;
 }
 
 .go:hover {
-    cursor: pointer;
-    background: rgba(240, 240, 240, 1);
+  cursor: pointer;
+  background: rgba(240, 240, 240, 1);
 }
 
-
 @keyframes flashs {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 #pause {
-    display: none;
-    position: fixed;
-    top: 45%;
-    height: 2em;
-    left: 40%;
-    width: 20%;
-    font-size: 2em;
-    text-align: center;
-    animation: flashs 2s infinite;
-    z-index: 900;
+  display: none;
+  position: fixed;
+  top: 45%;
+  height: 2em;
+  left: 40%;
+  width: 20%;
+  font-size: 2em;
+  text-align: center;
+  animation: flashs 2s infinite;
+  z-index: 900;
 }
 
-canvas#game,
-canvas#game-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    /*    width: 100%;*/
-    background: rgba(30, 87, 153, 0.7);
-    background: linear-gradient(to bottom, rgba(30, 87, 153, 0.7) 0%, rgba(32, 124, 202, 0.7) 51%, rgba(41, 137, 216, 0.7) 65%, rgba(41, 137, 216, 0.7) 65%, rgba(125, 185, 232, 0.7) 100%);
-    z-index: 10
+canvas#game, canvas#game-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /*    width: 100%;*/
+  background: rgba(30, 87, 153, 0.7);
+  background: linear-gradient(to bottom, rgba(30, 87, 153, 0.7) 0%, rgba(32, 124, 202, 0.7) 51%, rgba(41, 137, 216, 0.7) 65%, rgba(41, 137, 216, 0.7) 65%, rgba(125, 185, 232, 0.7) 100%);
+  z-index: 10
 }
 
 canvas#game-background {
-    background: rgba(30, 87, 200, 0.9);
-    z-index: 1;
+  background: rgba(30, 87, 200, 0.9);
+  z-index: 1;
 }
 
 .UI {
-    display: none;
-    position: fixed;
-    top: 2%;
-    left: 1.5%;
-    width: 100%;
-    font-size: 3em;
-    padding: 1%;
-    animation: pushFromTop 0.5s 1;
-    z-index: 50;
+  display: none;
+  position: fixed;
+  top: 2%;
+  left: 1.5%;
+  width: 100%;
+  font-size: 3em;
+  padding: 1%;
+  animation: pushFromTop 0.5s 1;
+  z-index: 50;
 }
 
-.UI .player,
-.UI .time {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-    width: 30%;
-    padding: 0.3%;
+.UI .player, .UI .time {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  width: 30%;
+  padding: 0.3%;
 }
 
 .UI .player .playerstat {
-    font-size: 0.5em;
-    width: 90%;
-    text-align: center;
-    background: linear-gradient(to right, rgba(230, 30, 30, 0) 0%, rgba(230, 30, 30, 1) 80%);
-    background-size: 200% 200%;
-    background-position: -100% -0%;
-    border: 1px rgba(230, 70, 70, 0.4) solid;
-    border-radius: 5px;
-    margin: 0 auto;
-    margin-bottom: 2%;
-    transition-duration: 0.6s;
+  font-size: 0.5em;
+  width: 90%;
+  text-align: center;
+  background: linear-gradient(to right, rgba(230, 30, 30, 0) 0%, rgba(230, 30, 30, 1) 80%);
+  background-size: 200% 200%;
+  background-position: -100% -0%;
+  border: 1px rgba(230, 70, 70, 0.4) solid;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 2%;
+  transition-duration: 0.6s;
 }
 
 .UI .player .playername {
-    width: 90%;
-    margin: 0 auto;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .UI .player .playerstat#player-mp {
-
-    border: 1px rgba(70, 70, 230, 0.4) solid;
-    background: linear-gradient(to right, rgba(111, 111, 245, 0) 0%, rgba(111, 111, 245, 1) 80%);
-    background-size: 200% 200%;
-    background-position: -100% -0%;
+  border: 1px rgba(70, 70, 230, 0.4) solid;
+  background: linear-gradient(to right, rgba(111, 111, 245, 0) 0%, rgba(111, 111, 245, 1) 80%);
+  background-size: 200% 200%;
+  background-position: -100% -0%;
 }
 
 .UI .time {
-    position: fixed;
-    top: 2%;
-    right: 1.5%;
-    width: auto;
-    padding: 0.5% 3%;
+  position: fixed;
+  top: 2%;
+  right: 1.5%;
+  width: auto;
+  padding: 0.5% 3%;
 }
 
 .UI .time#player-score {
-    position: fixed;
-    top: 12%;
-    right: 1.5%;
-    width: auto;
-    padding: 0.5% 3%;
+  position: fixed;
+  top: 12%;
+  right: 1.5%;
+  width: auto;
+  padding: 0.5% 3%;
 }
 
 .UI .spells {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
-    border: 1px black solid;
-    border-radius: 2px;
-    margin-top: 2%;
-    width: 7%;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px black solid;
+  border-radius: 2px;
+  margin-top: 2%;
+  width: 7%;
 }
 
 .UI .spells .spell {
-    border-bottom: 1px black solid;
-    transition-duration: 0.3s;
+  border-bottom: 1px black solid;
+  transition-duration: 0.3s;
 }
 
 .block {
-    filter: brightness(0);
+  filter: brightness(0);
 }
 
 .UI .spells .spell:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .spell#spell1 {
-    background: url(./tex/rock.png);
-    background-size: contain;
-    background-position: right;
-    background-repeat: no-repeat;
+  background: url(./tex/rock.png);
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
 }
 
 .spell#spell2 {
-    background: url(./tex/rock_explosion.png);
-    background-size: contain;
-    background-position: right;
-    background-repeat: no-repeat;
+  background: url(./tex/rock_explosion.png);
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
 }
 
 @keyframes pushFromTop {
-    0% {
-        transform: translateY(-100%);
-    }
-
-    100% {
-        transform: translateY(0%);
-    }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
 }
 
 @keyframes pushToTop {
-    0% {
-        transform: translateY(0%)
-    }
-
-    100% {
-        transform: translateY(-100%);
-    }
+  0% {
+    transform: translateY(0%)
+  }
+  100% {
+    transform: translateY(-100%);
+  }
 }
