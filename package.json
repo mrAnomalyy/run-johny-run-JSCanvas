@@ -1,0 +1,13 @@
+{
+  "name": "run-johny-run-JSCanvas",
+  "version": "1.0.0",
+  "repository": "https://github.com/mrAnomalyy/run-johny-run-JSCanvas",
+  "author": "Bogdan Anomalyy <mr.anomalyy@gmail.com>",
+  "license": "GNU-GPLv3",
+  "dependencies": {
+    "node-http-server": "8.1.4"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

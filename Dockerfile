@@ -1,2 +1,7 @@
-from httpd
-COPY ./public/ /usr/local/apache2/htdocs/
+from node:lts
+WORKDIR /app
+COPY ["package.json", "package-lock.json*", "./"]
+RUN yarn install --production
+COPY . .
+EXPOSE 3000
+CMD yarn start
